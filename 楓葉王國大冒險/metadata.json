@@ -1,0 +1,6 @@
+{
+  "name": "楓葉王國大冒險",
+  "description": "雙軌楓葉幣帳戶看板。提供個人與小隊公共雙軌帳戶獨立管理，包含活動回報、解鎖地標、即時排行榜與楓葉商城兌換系統。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

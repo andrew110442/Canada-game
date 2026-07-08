@@ -1,0 +1,48 @@
+#!/bin/bash
+awk '
+/const handleRedeem = async/ {
+  print "  const handleRevertItemPurchase = async (id: string) => {"
+  print "    showConfirm(\"退回個人道具\", \"確定要退回此道具嗎？退回後所有玩家因購買之花費楓葉幣會一併退回，對應道具造成之行動回報加成效果也會一併回覆原狀。\", async () => {"
+  print "      try {"
+  print "        const res = await fetch(`${window.location.origin}/api/admin/revert-item-purchase`, {"
+  print "          method: \"POST\","
+  print "          headers: { \"Content-Type\": \"application/json\" },"
+  print "          body: JSON.stringify({ redemptionId: id })"
+  print "        });"
+  print "        if (res.ok) {"
+  print "          const data = await res.json();"
+  print "          triggerMessage(\"success\", data.message || \"成功退回道具\");"
+  print "          await onRefreshData();"
+  print "          fetchRedemptions();"
+  print "        } else {"
+  print "          triggerMessage(\"error\", \"退回失敗\");"
+  print "        }"
+  print "      } catch (e) { triggerMessage(\"error\", \"發生錯誤\"); }"
+  print "    });"
+  print "  };"
+  print ""
+  print "  const handleRevertTeamPurchase = async (id: string) => {"
+  print "    showConfirm(\"退回小隊道具\", \"確定要退回此小隊道具嗎？退回後小隊花費將退還給所有隊員。\", async () => {"
+  print "      try {"
+  print "        const res = await fetch(`${window.location.origin}/api/admin/revert-team-purchase`, {"
+  print "          method: \"POST\","
+  print "          headers: { \"Content-Type\": \"application/json\" },"
+  print "          body: JSON.stringify({ redemptionId: id })"
+  print "        });"
+  print "        if (res.ok) {"
+  print "          const data = await res.json();"
+  print "          triggerMessage(\"success\", data.message || \"成功退回小隊道具\");"
+  print "          await onRefreshData();"
+  print "          fetchRedemptions();"
+  print "        } else {"
+  print "          triggerMessage(\"error\", \"退回失敗\");"
+  print "        }"
+  print "      } catch (e) { triggerMessage(\"error\", \"發生錯誤\"); }"
+  print "    });"
+  print "  };"
+  print ""
+  print
+  next
+}
+{ print }
+' src/components/AdminPanel.tsx > src/components/AdminPanel.tsx.tmp && mv src/components/AdminPanel.tsx.tmp src/components/AdminPanel.tsx
